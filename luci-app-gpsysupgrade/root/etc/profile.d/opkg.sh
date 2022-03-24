@@ -76,6 +76,9 @@ local OPKG_CONF="${OPKG_OPT}"
 local OPKG_AI="$(opkg export ai)"
 local OPKG_PR="$(opkg export pr)"
 local OPKG_PI="$(opkg export pi)"
+if ! uci -q get opkg > /dev/null
+then opkg init
+fi
 grep -x -f "${OPKG_AI}" "${OPKG_PR}" \
 | opkg proc remove
 grep -v -x -f "${OPKG_AI}" "${OPKG_PI}" \
@@ -102,6 +105,9 @@ rm -f "${OPKG_UR}" "${OPKG_UI}" "${OPKG_PR}" "${OPKG_PI}"
 
 opkg_upgr() {
 local OPKG_OPT="${1:-${OPKG_UCI}}"
+if ! uci -q get opkg > /dev/null
+then opkg init
+fi
 case "${OPKG_OPT}" in
 (ai|oi) opkg_"${OPKG_CMD}"_type ;;
 esac | opkg proc upgrade
