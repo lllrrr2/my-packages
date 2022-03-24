@@ -12,7 +12,6 @@ opkg_init() {
 uci import opkg < /dev/null
 uci -q batch << EOI
 set opkg.defaults='opkg'
-set opkg.defaults.import='/etc/backup/installed_packages.txt'
 set opkg.defaults.save='auto'
 set opkg.defaults.restore='auto'
 set opkg.defaults.rollback='auto'
