@@ -39,7 +39,7 @@ define Package/my-autocore-arm/description
 endef
 
 define Download/cpuinfo
-  URL:=https://raw.githubusercontent.com/immortalwrt/immortalwrt/openwrt-21.02/package/emortal/autocore/files/generic
+  URL:=https://raw.githubusercontent.com/immortalwrt/immortalwrt/master/package/emortal/autocore/files/generic/cpuinfo
   URL_FILE:=cpuinfo
   FILE:=cpuinfo
   HASH:=skip
