@@ -29,9 +29,11 @@ end
 function to_check()
     if not board_name or board_name == "" then board_name = luci.sys.exec("echo -n \"" ..api.auto_get_board_name().. "\" | sed s/,/_/") end
 	arch = nixio.uname().machine
+	local boardinfo = luci.util.ubus("system", "board") or { }
+	target = luci.sys.exec("echo -n \"" ..boardinfo.release.target.. "\" | sed s,/,-,")
 	sysverformat = luci.sys.exec("date -d $(echo " ..get_system_version().. " | awk -F. '{printf $3\"-\"$1\"-\"$2}') +%s")
 	currentTimeStamp = luci.sys.exec("expr $(date -d \"$(date '+%Y-%m-%d %H:%M:%S')\" +%s) - 172800")
-	model = arch.. "/" ..board_name
+	model = target.. "/" ..board_name
     if board_name == "x86_64" then
     	model = "x86_64"
     	check_update()
@@ -52,13 +54,13 @@ function to_check()
     	end
 	elseif board_name:match("phicomm,k3$") or board_name:match("rt%-ac88u$") then
 		check_update()
-		download_url = "https://dl.openwrt.ai/firmware/" ..model.. "/" ..remote_version.. "-openwrt-" ..arch.. "-" ..board_name.. "-squashfs.trx"
-    elseif board_name:match("nanopi%-") or board_name:match("nanopc%-") or board_name:match("fastrhino") or board_name:match("hinlink") or board_name:match("xunlong") or board_name:match("photonicat") or board_name:match("rpi%-") then
+		download_url = "https://dl.openwrt.ai/firmware/" ..model.. "/" ..remote_version.. "-openwrt-" ..target.. "-" ..board_name.. "-squashfs.trx"
+    elseif arch:match("aarch") or board_name:match("fastrhino") or board_name:match("fastrhino") or board_name:match("hinlink") or board_name:match("xunlong") or board_name:match("photonicat") or board_name:match("rpi%-") then
 		check_update()
-		download_url = "https://dl.openwrt.ai/firmware/" ..model.. "/" ..remote_version.. "-openwrt-" ..arch.. "-" ..board_name.. "-squashfs-sysupgrade.img.gz"
+		download_url = "https://dl.openwrt.ai/firmware/" ..model.. "/" ..remote_version.. "-openwrt-" ..target.. "-" ..board_name.. "-squashfs-sysupgrade.img.gz"
     else
 		check_update()
-		download_url = "https://dl.openwrt.ai/firmware/" ..model.. "/" ..remote_version.. "-openwrt-" ..arch.. "-" ..board_name.. "-squashfs-sysupgrade.bin"
+		download_url = "https://dl.openwrt.ai/firmware/" ..model.. "/" ..remote_version.. "-openwrt-" ..target.. "-" ..board_name.. "-squashfs-sysupgrade.bin"
     end
 	
 
