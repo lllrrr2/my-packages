@@ -55,7 +55,7 @@ function to_check()
 	elseif board_name:match("phicomm,k3$") or board_name:match("rt%-ac88u$") then
 		check_update()
 		download_url = "https://dl.openwrt.ai/firmware/" ..model.. "/" ..remote_version.. "-openwrt-" ..target.. "-" ..board_name.. "-squashfs.trx"
-    elseif arch:match("aarch") or board_name:match("fastrhino") or board_name:match("fastrhino") or board_name:match("hinlink") or board_name:match("xunlong") or board_name:match("photonicat") or board_name:match("rpi%-") then
+    elseif arch:match("aarch64_generic") or board_name:match("rpi%-") then
 		check_update()
 		download_url = "https://dl.openwrt.ai/firmware/" ..model.. "/" ..remote_version.. "-openwrt-" ..target.. "-" ..board_name.. "-squashfs-sysupgrade.img.gz"
     else
