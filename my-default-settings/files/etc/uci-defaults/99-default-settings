@@ -243,3 +243,9 @@ rm -rf /tmp/luci-*
 
 uci -q set base_config.@status[0].version=$version
 uci commit base_config
+
+modprobe xt_FULLCONENAT || {
+uci -q set firewall.@defaults[0].fullcone='0'
+uci commit firewall
+fi
+}
